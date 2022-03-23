@@ -1,0 +1,20 @@
+#lang racket
+
+
+(display-rules
+   (compile-instr '()
+                  (sub
+                   (list (sv 'Mod '(0 1 2) 0))
+                   (list
+                    (while (λ (head context) (not (cblank? head)))
+                            (list
+                             (tcond
+                              (list
+                               [list (λ (head context) (cone? head))
+                                     (list (tcond
+                                            (list
+                                             [list (λ (head context) (= (get-context context 'Mod) 0)) (list (set-var 'Mod 1))]
+                                             [list (λ (head context) (= (get-context context 'Mod) 1)) (list (set-var 'Mod 2))]
+                                             [list (λ (head context) (= (get-context context 'Mod) 2)) (list (set-var 'Mod 0))])))]))
+                             (move right)))))
+                  init-state halt-state))
